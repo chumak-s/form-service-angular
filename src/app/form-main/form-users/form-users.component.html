@@ -1,9 +1,9 @@
 <div class="user-container">
-  <div>
-    <p><strong>Новиков Дмитрий Олегович</strong></p>
+  <div *ngFor="let user of users" (click)="selectUser(user.id)" [class.active]="selected(user.id)">
+    <p><strong>{{user.name}}</strong></p>
     <div>
-      <p>Услуг: 3</p>
-      <p>аб. плата: 180 руб</p>
+      <p>Услуг: {{user.options.length}}</p>
+      <p>аб. плата: {{user.options | pipeOptionsSum}} руб</p>
     </div>
   </div>
 </div>

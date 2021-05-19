@@ -1,6 +1,11 @@
 <div class="main-form">
   <app-form-users
+    [users]="users"
+    (selectedUserId)="onChangeUser($event)"
   ></app-form-users>
   <app-form-options
+    [user]="selectedUser"
+    (removeOption)="onRemoveOption($event)"
   ></app-form-options>
 </div>
+

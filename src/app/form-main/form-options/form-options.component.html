@@ -1,18 +1,18 @@
 <div>
   <h1>Подключенные услуги</h1>
   <input class="search" placeholder="Поиск">
-  <div class="service-active">
-    <div>
-      <p>21.05.2016</p>
-      <p>&nbsp; Пакет минут</p>
+  <div *ngFor="let option of user.options" class="service-active">
+    <div >
+      <p>{{option.startDate | date: 'dd.MM.YYYY'}}</p>
+      <p>&nbsp; {{option.name}}</p>
     </div>
     <div>
-      <p>100 руб</p>
-      <button>&#10007;</button>
+      <p>{{option.price}} руб</p>
+      <button (click)="onRemoveOption(option.id)">&#10007;</button>
     </div>
   </div>
-  <p>
-
+  <p *ngIf="showSelectedNotice">
+    Нет подключенных услуг
   </p>
 </div>
 <div class="available-service">
