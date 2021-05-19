@@ -1,0 +1,36 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 4px;
+  justify-content: flex-start;
+  height: 100%;
+
+  & > div {
+    border: 1px solid black;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px 20px;
+    transition: all 0.18s ease-in;
+    font-size: 17px;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      p {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  & > div:not(.active):hover {
+    box-shadow: 2px 6px 8px 0 #5f5e5e;
+    cursor: pointer;
+  }
+}
+
+
+.active {
+  background: #eaeaea;
+  border: 1px solid #7f7e7e;
+}
