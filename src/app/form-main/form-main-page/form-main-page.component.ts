@@ -48,11 +48,11 @@ export class FormMainPageComponent {
     if (!idList.includes(id)) {
       idList.push(id)
       this.selectedAvailableOptionsId = [...idList]
-      this.filteredAvailableOptions = this.changeCheckOptions(this.filteredAvailableOptions, idList)
+      this.filteredAvailableOptions = [...this.changeCheckOptions(this.filteredAvailableOptions, idList)]
     } else {
       idList = idList.filter(item => item !== id)
       this.selectedAvailableOptionsId = [...idList]
-      this.filteredAvailableOptions = this.changeCheckOptions(this.filteredAvailableOptions, idList)
+      this.filteredAvailableOptions = [...this.changeCheckOptions(this.filteredAvailableOptions, idList)]
     }
   }
 
