@@ -6,7 +6,10 @@
   ></app-form-users>
   <app-form-options
     [user]="selectedUser"
+    [availableOptions]="filteredAvailableOptions"
     (removeOption)="onRemoveOption($event)"
+    (selectedOptionId)="selectAnOption($event)"
+    (addSelectedOptions)="onAddSelectedOptions()"
   ></app-form-options>
 </div>
 
