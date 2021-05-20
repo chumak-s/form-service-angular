@@ -4,12 +4,14 @@ import { FormMainPageComponent } from './form-main-page/form-main-page.component
 import { RouterModule } from '@angular/router'
 import { FormUsersComponent } from './form-users/form-users.component'
 import { FormOptionsComponent } from './form-options/form-options.component'
+import { PipeOptionsSumPipe } from '../pipes/pipe-options-sum.pipe'
 
 @NgModule({
   declarations: [
     FormMainPageComponent,
     FormUsersComponent,
-    FormOptionsComponent
+    FormOptionsComponent,
+    PipeOptionsSumPipe
   ],
   imports: [
     CommonModule,
