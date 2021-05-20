@@ -38,12 +38,12 @@ export class FormMainPageComponent {
     }
   ]
 
-  selectedUserId = 0
+  selectedUserId = this.users[0].id
   selectedUser: User = { ...this.users[0] }
 
   onChangeUser (id: number): void {
     this.selectedUserId = id
-    this.selectedUser = { ...this.users[id] }
+    this.selectedUser = { ...this.users.filter(user => user.id === id)[0] }
   }
 
   onRemoveOption (id: number): void {

@@ -10,10 +10,9 @@ import { User } from '../../types/user.type'
 export class FormUsersComponent {
   @Input() users: User[] | null = null
   @Output() selectedUserId: EventEmitter<number> = new EventEmitter<number>()
-  currentId = 0
+  @Input() currentId: number
 
   selectUser (id: number): void {
-    this.currentId = id
     this.selectedUserId.emit(id)
   }
 
