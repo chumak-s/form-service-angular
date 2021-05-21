@@ -26,25 +26,33 @@ export class FormMainPageComponent {
 
   selectedUserId = this.users[0].id
   selectedUser: User = { ...this.users[0] }
+  filteredUserOptions: UserOption[] = []
   selectedAvailableOptionsId: number[] = []
   filteredAvailableOptions: UserOption[] = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+  inputValue = ''
 
   onChangeUser (id: number): void {
     this.selectedUserId = id
     this.selectedUser = { ...this.users.find(user => user.id === id) }
     this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
     this.selectedAvailableOptionsId = []
+    this.searchAvailableOptions()
+    this.searchUserOptions()
   }
 
   onRemoveOption (id: number): void {
     const options: UserOption[] = this.selectedUser.options.filter(option => option.id !== id)
+
     this.selectedUser = { ...this.selectedUser, options }
     this.users = [...this.saveUpdateUsers(this.users, options)]
     this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+    this.searchAvailableOptions()
+    this.searchUserOptions()
   }
 
   selectAnOption (id: number): void {
     let idList: number[] = [...this.selectedAvailableOptionsId]
+
     if (!idList.includes(id)) {
       idList.push(id)
       this.selectedAvailableOptionsId = [...idList]
@@ -58,15 +66,19 @@ export class FormMainPageComponent {
 
   onAddSelectedOptions (): void {
     const options: UserOption[] = [...this.selectedUser.options]
+
     this.availableOptions.forEach(option => {
       if (this.selectedAvailableOptionsId.includes(option.id)) {
         options.push({ ...option, startDate: new Date() })
       }
     })
+
     this.selectedAvailableOptionsId = []
     this.selectedUser = { ...this.selectedUser, options }
     this.users = [...this.saveUpdateUsers(this.users, options)]
     this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+    this.searchAvailableOptions()
+    this.searchUserOptions()
   }
 
   getFilteredAvailableOption (options: UserOption[], currentUser: User): UserOption[] {
@@ -91,5 +103,25 @@ export class FormMainPageComponent {
         return { ...option, check: false }
       }
     })
+  }
+
+  onChangeInputValue (inputValue: string): void {
+    this.inputValue = inputValue
+    this.searchAvailableOptions()
+    this.searchUserOptions()
+  }
+
+  searchAvailableOptions (): void {
+    this.filteredAvailableOptions = [...this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)]
+
+    const options: UserOption[] = this.filteredAvailableOptions
+      .filter(option => option.name.toLowerCase().includes(this.inputValue.trim().toLowerCase()))
+
+    this.filteredAvailableOptions = [...options]
+  }
+
+  searchUserOptions (): void {
+    this.filteredUserOptions = this.selectedUser.options
+      .filter(option => option.name.toLowerCase().includes(this.inputValue.trim().toLowerCase()))
   }
 }

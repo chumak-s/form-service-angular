@@ -7,9 +7,11 @@
   <app-form-options
     [user]="selectedUser"
     [availableOptions]="filteredAvailableOptions"
+    [filteredUserOptions]="filteredUserOptions"
     (removeOption)="onRemoveOption($event)"
     (selectedOptionId)="selectAnOption($event)"
     (addSelectedOptions)="onAddSelectedOptions()"
+    (changeInputValue)="onChangeInputValue($event)"
   ></app-form-options>
 </div>
 
