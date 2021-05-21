@@ -1,0 +1,92 @@
+.service-active {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 12px 0;
+
+  div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  & div:first-child {
+    justify-content: flex-start;
+    align-items: center;
+
+    p:first-child{
+      color: #7f7e7e;
+    }
+  }
+
+  & div:last-child {
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  button {
+    margin-left: 20px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid #ec3232;
+    background: #fad3d3;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+}
+
+.search {
+  width: 100%;
+  padding: 7px 3px;
+  margin: 10px 0 10px 0;
+  border-radius: 7px;
+  border: 4px double black;
+  font-size: 16px;
+
+  &::placeholder {
+    font-size: 16px;
+  }
+}
+
+hr {
+  margin: 7px 0;
+}
+
+
+.available-service {
+  margin: 32px 0;
+
+
+  div:not(.container-btn) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    p:last-child {
+      justify-content: flex-end;
+    }
+  }
+
+  button {
+    justify-content: flex-end;
+    margin-left: 20px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid #76bd77;
+    background: #dbfdcd;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  input {
+    margin-right: 10px;
+  }
+}
+
+.container-btn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}

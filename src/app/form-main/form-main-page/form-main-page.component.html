@@ -1,1 +1,17 @@
-<p>form-main-page works!</p>
+<div class="main-form">
+  <app-form-users
+    [users]="users"
+    [currentId]="selectedUserId"
+    (selectedUserId)="onChangeUser($event)"
+  ></app-form-users>
+  <app-form-options
+    [user]="selectedUser"
+    [availableOptions]="filteredAvailableOptions"
+    [filteredUserOptions]="filteredUserOptions"
+    (removeOption)="onRemoveOption($event)"
+    (selectedOptionId)="selectAnOption($event)"
+    (addSelectedOptions)="onAddSelectedOptions()"
+    (changeInputValue)="onChangeInputValue($event)"
+  ></app-form-options>
+</div>
+

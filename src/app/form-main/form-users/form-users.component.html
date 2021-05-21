@@ -1,1 +1,9 @@
-<p>form-users works!</p>
+<div class="user-container">
+  <div *ngFor="let user of users" (click)="selectUser(user.id)" [class.active]="selected(user.id)">
+    <p><strong>{{user.name}}</strong></p>
+    <div>
+      <p>Услуг: {{user.options.length}}</p>
+      <p>аб. плата: {{user.options | pipeOptionsSum}} руб</p>
+    </div>
+  </div>
+</div>

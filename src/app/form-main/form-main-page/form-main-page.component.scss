@@ -1,0 +1,22 @@
+.main-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 120px;
+  height: content-box;
+
+
+  app-form-users {
+    flex-grow: 1;
+  }
+  app-form-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 2;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-left: 9px;
+    padding: 40px;
+  }
+}

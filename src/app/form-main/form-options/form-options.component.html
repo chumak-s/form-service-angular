@@ -1,1 +1,39 @@
-<p>form-options works!</p>
+<div>
+  <h1>Подключенные услуги</h1>
+
+  <input [(ngModel)]="inputValue" (input)="onChangeInputValue()" class="search" placeholder="Поиск" type="search">
+
+  <div *ngFor="let option of showFilteredUserOptions" class="service-active">
+    <div >
+      <p>{{option.startDate | date: 'dd.MM.YYYY'}}</p>
+      <p>&nbsp; {{option.name}}</p>
+    </div>
+
+    <div>
+      <p>{{option.price}} руб</p>
+      <button (click)="onRemoveOption(option.id)">&#10007;</button>
+    </div>
+  </div>
+  <p *ngIf="showSelectedOptionNotice">
+    Нет подключенных услуг
+  </p>
+</div>
+
+<div class="available-service">
+  <h1>Доступные услуги</h1>
+  <hr>
+
+  <div class="available-service" *ngFor="let option of availableOptions">
+    <div>
+      <input type="checkbox" [id]="option.id" [checked]="option.check" (click)="selectAnOption($event, option.id)">
+      <label [for]="option.id">{{option.name}}</label>
+    </div>
+    <p>{{option.price}} руб</p>
+  </div>
+
+  <p *ngIf="showUnselectedOptionNotice">Нет доступных услуг</p>
+
+  <div class="container-btn">
+    <button *ngIf="!showUnselectedOptionNotice" (click)="onAddSelectedOptions()">Подключить услуги</button>
+  </div>
+</div>
