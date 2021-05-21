@@ -9,55 +9,87 @@ import { User, UserOption } from '../../types/user.type'
 })
 export class FormMainPageComponent {
   users: User[] = [
-    {
-      id: 0,
-      name: 'Новиков Дмитрий Олегович',
-      options: [
-        { id: 0, name: 'Пакет минут', price: 300, startDate: new Date() },
-        { id: 1, name: 'Пакет смс', price: 0, startDate: new Date() },
-        { id: 2, name: 'Обслуживание', price: 60, startDate: new Date() }
-      ]
-    },
-    {
-      id: 1,
-      name: 'Смирнов Евгений Михайлович',
-      options: [
-        { id: 0, name: 'Пакет минут', price: 300, startDate: new Date() },
-        { id: 1, name: 'Обслуживание', price: 10, startDate: new Date() },
-        { id: 2, name: 'Интернет', price: 20, startDate: new Date() },
-        { id: 3, name: 'Гороскоп', price: 0, startDate: new Date() }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Новикова Ольга Алексеевна',
-      options: [
-        { id: 0, name: 'ТВ', price: 100, startDate: new Date() },
-        { id: 1, name: 'Пакет минут', price: 150, startDate: new Date() }
-      ]
-    }
+    { id: 234, name: 'Новиков Дмитрий Олегович', options: [] },
+    { id: 34, name: 'Смирнов Евгений Михайлович', options: [] },
+    { id: 52, name: 'Новикова Ольга Алексеевна', options: [] }
+  ]
+
+  availableOptions: UserOption[] = [
+    { id: 325, name: 'Пакет минут', price: 600, check: false },
+    { id: 23, name: 'Пакет смс', price: 150, check: false },
+    { id: 53, name: 'Интернет', price: 250, check: false },
+    { id: 6467, name: 'Обслуживание', price: 60, check: false },
+    { id: 9789, name: 'Определитель номера', price: 0, check: false },
+    { id: 453, name: 'Антиспам', price: 90, check: false },
+    { id: 6, name: 'Гороскоп', price: 120, check: false }
   ]
 
   selectedUserId = this.users[0].id
   selectedUser: User = { ...this.users[0] }
+  selectedAvailableOptionsId: number[] = []
+  filteredAvailableOptions: UserOption[] = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
 
   onChangeUser (id: number): void {
     this.selectedUserId = id
     this.selectedUser = { ...this.users.find(user => user.id === id) }
+    this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+    this.selectedAvailableOptionsId = []
   }
 
   onRemoveOption (id: number): void {
     const options: UserOption[] = this.selectedUser.options.filter(option => option.id !== id)
     this.selectedUser = { ...this.selectedUser, options }
-    const updatedUsers: User[] = this.users.map(user => {
-      if (user.id === this.selectedUserId) {
-        return {
-          ...user,
-          options
-        }
+    this.users = [...this.saveUpdateUsers(this.users, options)]
+    this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+  }
+
+  selectAnOption (id: number): void {
+    let idList: number[] = [...this.selectedAvailableOptionsId]
+    if (!idList.includes(id)) {
+      idList.push(id)
+      this.selectedAvailableOptionsId = [...idList]
+      this.filteredAvailableOptions = [...this.changeCheckOptions(this.filteredAvailableOptions, idList)]
+    } else {
+      idList = idList.filter(item => item !== id)
+      this.selectedAvailableOptionsId = [...idList]
+      this.filteredAvailableOptions = [...this.changeCheckOptions(this.filteredAvailableOptions, idList)]
+    }
+  }
+
+  onAddSelectedOptions (): void {
+    const options: UserOption[] = [...this.selectedUser.options]
+    this.availableOptions.forEach(option => {
+      if (this.selectedAvailableOptionsId.includes(option.id)) {
+        options.push({ ...option, startDate: new Date() })
       }
-      return user
     })
-    this.users = [...updatedUsers]
+    this.selectedAvailableOptionsId = []
+    this.selectedUser = { ...this.selectedUser, options }
+    this.users = [...this.saveUpdateUsers(this.users, options)]
+    this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
+  }
+
+  getFilteredAvailableOption (options: UserOption[], currentUser: User): UserOption[] {
+    const nameUserOptionsList: string[] = currentUser.options.map(option => option.name)
+    return options.filter(option => !nameUserOptionsList.includes(option.name))
+  }
+
+  saveUpdateUsers (users: User[], options: UserOption[]): User[] {
+    return users.map(user => {
+      if (user.id === this.selectedUserId) {
+        return { ...user, options }
+      }
+      return { ...user }
+    })
+  }
+
+  changeCheckOptions (options: UserOption[], idList: number[]): UserOption[] {
+    return options.map(option => {
+      if (idList.includes(option.id)) {
+        return { ...option, check: true }
+      } else {
+        return { ...option, check: false }
+      }
+    })
   }
 }

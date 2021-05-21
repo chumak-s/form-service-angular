@@ -9,4 +9,5 @@ export interface UserOption {
   name: string
   price: number
   startDate?: Date
+  check?: boolean
 }
