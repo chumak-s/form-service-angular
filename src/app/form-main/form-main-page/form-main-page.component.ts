@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { User, UserOption } from '../../types/user.type'
 
 @Component({
@@ -7,7 +7,7 @@ import { User, UserOption } from '../../types/user.type'
   styleUrls: ['./form-main-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormMainPageComponent {
+export class FormMainPageComponent implements OnInit {
   users: User[] = [
     { id: 234, name: 'Новиков Дмитрий Олегович', options: [] },
     { id: 34, name: 'Смирнов Евгений Михайлович', options: [] },
@@ -31,6 +31,14 @@ export class FormMainPageComponent {
   filteredAvailableOptions: UserOption[] = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
   inputValue = ''
 
+  ngOnInit (): void {
+    if (!localStorage.getItem('users')) {
+      this.saveUsersToLocalStorage()
+    }
+    this.users = [...JSON.parse(localStorage.getItem('users'))]
+    this.selectedUser = { ...this.users[0] }
+  }
+
   onChangeUser (id: number): void {
     this.selectedUserId = id
     this.selectedUser = { ...this.users.find(user => user.id === id) }
@@ -38,6 +46,7 @@ export class FormMainPageComponent {
     this.selectedAvailableOptionsId = []
     this.searchAvailableOptions()
     this.searchUserOptions()
+    this.saveUsersToLocalStorage()
   }
 
   onRemoveOption (id: number): void {
@@ -48,6 +57,7 @@ export class FormMainPageComponent {
     this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
     this.searchAvailableOptions()
     this.searchUserOptions()
+    this.saveUsersToLocalStorage()
   }
 
   selectAnOption (id: number): void {
@@ -79,6 +89,7 @@ export class FormMainPageComponent {
     this.filteredAvailableOptions = this.getFilteredAvailableOption(this.availableOptions, this.selectedUser)
     this.searchAvailableOptions()
     this.searchUserOptions()
+    this.saveUsersToLocalStorage()
   }
 
   getFilteredAvailableOption (options: UserOption[], currentUser: User): UserOption[] {
@@ -123,5 +134,9 @@ export class FormMainPageComponent {
   searchUserOptions (): void {
     this.filteredUserOptions = this.selectedUser.options
       .filter(option => option.name.toLowerCase().includes(this.inputValue.trim().toLowerCase()))
+  }
+
+  saveUsersToLocalStorage (): void {
+    localStorage.setItem('users', JSON.stringify(this.users))
   }
 }
