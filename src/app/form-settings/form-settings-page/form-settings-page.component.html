@@ -1,1 +1,81 @@
-<p>form-settings-page works!</p>
+<div class="form-settings">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div  class="container-input">
+
+      <div>
+        <label>ФИО</label>
+        <input type="text" [formControlName]="'fullName'">
+      </div>
+
+      <div>
+        <label>Псевдоним</label>
+        <input [class.error]="!userName.valid" type="text" [formControlName]="'userName'">
+      </div>
+
+      <small *ngIf="userName?.errors?.maxlength">Длина не может превышать 200 символов</small>
+      <small *ngIf="userName?.errors?.required">Поле не может быть пустым</small>
+
+    </div>
+
+    <div class="form-checkbox">
+
+      <div>
+        <input id="notification" type="checkbox" [formControlName]="'notifications'">
+        <label for="notification" >Оповещения</label>
+      </div>
+
+      <div *ngIf="showNotificationsWays" class="container-radio">
+        <div>
+
+          <div>
+            <input type="radio"
+                   id="radio-1"
+                   name="notificationsType"
+                   value="email"
+                   [formControlName]="'notificationsType'"
+
+            >
+            <label for="radio-1">Email</label>
+          </div>
+          <input [class.error]="!email.disabled && !email.valid" class="input-text" type="text" [formControlName]="'email'">
+
+        </div>
+
+        <small *ngIf="email?.errors?.maxlength">Длина не может превышать 200 символов </small>
+        <small *ngIf="email?.errors?.required">Поле не может быть пустым</small>
+        <small *ngIf="email?.errors?.email && !email?.errors?.maxlength">Введите корректный email</small>
+
+        <div>
+          <div>
+            <input type="radio"
+                   id="radio-2"
+                   name="notificationsType"
+                   value="phone"
+                   [formControlName]="'notificationsType'"
+            >
+            <label for="radio-2">Телефон</label>
+          </div>
+          <input [class.error]="!phone.disabled && !phone.valid"
+                 class="input-text"
+                 type="text"
+                 [formControlName]="'phone'"
+          >
+
+        </div>
+
+        <small *ngIf="phone?.errors?.maxlength ">Длина должна быть 11 символов</small>
+        <small *ngIf="phone?.errors?.minlength && !phone?.errors?.phoneValidator ">Длина должна быть 11 символов</small>
+        <small *ngIf="phone?.errors?.required">Поле не может быть пустым</small>
+        <small *ngIf="phone?.errors?.phoneValidator && !phone?.errors?.required">Телефон должен начинаться с '89'</small>
+
+      </div>
+    </div>
+
+    <div class="container-btn">
+      <button type="button" [disabled]="disabledButton" (click)="cancelChanges()">Отменить изменения</button>
+      <button type="submit" [disabled]="!form.valid">Сохранить</button>
+    </div>
+
+  </form>
+</div>
